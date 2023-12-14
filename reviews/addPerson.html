@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Add New Person</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"/>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main>
+		<section class="container">
+			<div class="title">
+				<h2>Add a new person</h2>
+			<div class="underline"></div>
+			</div>
+			<article class="review">
+			<button type="button" class="submit" id="submit">Submit</button>
+			<form id="newPersonForm">
+				<label for="author">Name:</label>
+				<input type="text" id="author" name="name" required>
+
+				<label for="profession">Job:</label>
+				<input type="text" id="profession" name="job" required>
+
+				<label for="img">Image URL:</label>
+				<input type="text" id="img" name="img" required>
+
+				<label for="info">Info:</label>
+				<textarea id="info" name="info" required></textarea>
+			</form>
+			</article>
+		</section>
+	</main>
+	<script src="main.js"></script>
+</body>
+</html>
