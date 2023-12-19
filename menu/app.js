@@ -80,7 +80,6 @@ const menu = [
 		desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
 	  },
 ];
-
 const sectionCenter = document.querySelector('.section-center');
 const btnContainer = document.querySelector('.btn-container');
 
@@ -90,16 +89,21 @@ window.addEventListener('DOMContentLoaded', function(){
 });
 
 function displayMenuButtons(){
-	const categories = menu.reduce(function(values, item) {
-		if (!values.includes(item.category))
-		values.push(item.category);
-		return values;
-	}, ['all']);
+	const categories = getCategoryBtns();
 	const categoryBtns = categories.map(function(category){
 		return `<button class="filter-btn" type="button" data-id=${category}>${category}</button>`;
 	}).join('');
 	btnContainer.innerHTML = categoryBtns;
 	filterMenuItems();
+}
+
+function getCategoryBtns(){
+	const categories = menu.reduce(function(values, item) {
+		if (!values.includes(item.category))
+		values.push(item.category);
+		return values;
+	}, ['all']);
+	return categories;
 }
 
 function filterMenuItems(){
