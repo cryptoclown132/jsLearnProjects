@@ -1,3 +1,5 @@
+// make custom giveaway possibility
+
 const months = [
   "January",
   "February",
@@ -23,47 +25,99 @@ const weekdays = [
   "Saturday",
 ];
 
-const giveaway = document.querySelector(".giveaway");
 const deadline = document.querySelector(".deadline");
 const items = document.querySelectorAll(".deadline-format h4");
+let gaDeadline = setGiveawayUp();
+let countdown = setInterval(getRemainingTime, 1000);
 
-let futureDate = new Date(2023, 11, 29, 11, 29, 0);	
+getRemainingTime();
 
-const weekday = weekdays[futureDate.getDay()];
-const year = futureDate.getFullYear();
-const month = months[futureDate.getMonth()];
-const date = futureDate.getDate();
-const hours = futureDate.getHours();
-const minutes = futureDate.getMinutes();
+function setGiveawayUp() {
+  setGiveawayHeading();
+  return setGiveawayDeadline();
+}
 
-giveaway.textContent = `giveaway ends on ${weekday} ${year} ${month} ${date}
-                      ${hours}:${minutes}am`;
+function setGiveawayHeading() {
+  let giveawayHeading = document.getElementById("giveaway-heading");
 
-const futurTime = futureDate.getTime();
+  giveawayHeading.textContent = prompt("Enter the giveaway heading:");
+}
+
+function setGiveawayDeadline() {
+  let gaDeadline = new Date(prompt("Enter the year:"), prompt("Enter the month:")
+                        , prompt("Enter the day:"), prompt("Enter the hour:")
+                        , prompt("Enter the minute:"), 0);
+
+  displayGiveawayEnd(gaDeadline);
+  return gaDeadline;
+};
+
+function displayGiveawayEnd(gaDeadline) {
+  const giveaway = document.querySelector(".giveaway");
+  const weekday = weekdays[gaDeadline.getDay()];
+  const year = gaDeadline.getFullYear();
+  const month = months[gaDeadline.getMonth()];
+  const date = gaDeadline.getDate();
+  const hours = gaDeadline.getHours();
+  const minutes = gaDeadline.getMinutes();
+
+  giveaway.textContent = `giveaway ends on ${weekday} ${year} ${month} ${addZero(date)}
+                      ${addZero(hours)}:${addZero(minutes)}am`;
+}
 
 function getRemainingTime() {
   const today = new Date().getTime();
-  const countInMs = futurTime - today;
+  const countInMs = gaDeadline.getTime() - today;
 
-  const oneDay = 24 * 60 * 60 * 1000;
-  const oneHour = 60 * 60 * 1000;
-  const oneMinute = 60 * 1000;
+  getCounterValues(getDays(countInMs), getHours(countInMs), getMinutes(countInMs)
+                  , getSeconds(countInMs));  
+  if (countInMs < 0)
+    endCountdown();
+}
 
-  let days = Math.floor(countInMs / oneDay);
-  let hours = Math.floor((countInMs % oneDay) / oneHour);
-  let minutes = Math.floor((countInMs % oneHour) / oneMinute);
-  let seconds = Math.floor((countInMs % oneMinute) / 1000);
+function endCountdown(countdown) {
+  clearInterval(countdown);
+  deadline.innerHTML = `<h4 class="expired">sorry, this giveaway has expired</h4>`;
+}
 
+function getCounterValues(days, hours, minutes, seconds) {
   const counterValues = [days, hours, minutes, seconds];
+
   items.forEach((item, index) => {
     item.innerHTML = addZero(counterValues[index]);
   })
 }
-
+ 
 function addZero(number) {
   if (number < 10)
     return `0${number}`;
   return number;
 }
 
-getRemainingTime();
+function getDays(countInMs) {
+  return Math.floor(countInMs / dayInMs());
+}
+
+function getHours(countInMs) {
+  return Math.floor((countInMs % dayInMs()) / hourInMs());
+}
+
+function getMinutes(countInMs) {
+  return Math.floor((countInMs % hourInMs()) / minuteInMs());
+}
+
+function getSeconds(countInMs) {
+  return Math.floor((countInMs % minuteInMs()) / 1000);
+}
+
+function dayInMs() {
+  return 24 * 60 * 60 * 1000;
+}
+
+function hourInMs() {
+  return 60 * 60 * 1000;
+}
+
+function minuteInMs() {
+  return 60 * 1000;
+}
