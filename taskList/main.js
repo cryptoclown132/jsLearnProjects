@@ -6,6 +6,7 @@ function initalize() {
     const input = document.querySelector('#new-task-input');
     const list_el = document.querySelector("#tasks");
     const storedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
     storedTasks.forEach(task => createTaskElement(task, list_el));
     form.addEventListener('submit', (e) => updateTaskElementList(e, input, list_el));
 }
@@ -13,6 +14,7 @@ function initalize() {
 function updateTaskElementList(e, input, list_el) {
     e.preventDefault();
     const task = input.value;
+
     if (!task) {
         alert('Please enter a task');
         return;
