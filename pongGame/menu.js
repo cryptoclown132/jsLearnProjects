@@ -28,8 +28,8 @@ export function endGameMenu(text) {
         Pong.canvas.height / 2 + 15
     );
 
-    setTimeout(function () {
-        Pong = Object.assign({}, Game);
+    setTimeout(function () {     
+        // Pong = Object.assign({}, Game);
         Pong.initialize();
     }, 3000);
 }

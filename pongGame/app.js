@@ -17,9 +17,8 @@ export let rounds = [5, 5, 3, 3, 2];
 let colors = ['#1abc9c', '#2ecc71', '#3498db', '#8c52ff', '#9b59b6'];
  
 // The ball object (The cube that bounces back and forth)
-let Ball = {
-    new: function (incrementedSpeed) {
-        return {
+function ball(incrementedSpeed) {
+    return {
             width: 18,
             height: 18,
             x: (this.canvas.width / 2) - 9,
@@ -28,8 +27,20 @@ let Ball = {
             moveY: DIRECTION.IDLE,
             speed: incrementedSpeed || 7 
         };
-    }
-};
+}
+// let Ball = {
+//     new: function (incrementedSpeed) {
+//         return {
+//             width: 18,
+//             height: 18,
+//             x: (this.canvas.width / 2) - 9,
+//             y: (this.canvas.height / 2) - 9,
+//             moveX: DIRECTION.IDLE,
+//             moveY: DIRECTION.IDLE,
+//             speed: incrementedSpeed || 7 
+//         };
+//     }
+// };
  
 // The ai object (The two lines that move up and down)
 let Ai = {
@@ -58,7 +69,8 @@ function initializeGame() {
 
     this.player = Ai.new.call(this, 'left');
     this.ai = Ai.new.call(this, 'right');
-    this.ball = Ball.new.call(this);
+    // this.ball = Ball.new.call(this);
+    this.ball = ball.call(this);
 
     this.ai.speed = 5;
     this.running = this.over = false;
@@ -67,7 +79,7 @@ function initializeGame() {
     this.color = '#8c52ff';
 
     Pong.menu();
-    Pong.listen();
+    Pong.keyEvents();
 }
 
 
@@ -93,7 +105,7 @@ function loop() {
         requestAnimationFrame(Pong.loop);
 }
 
-function listen() {
+function keyEvents() {
     document.addEventListener('keydown', function (key) {
         // Handle the 'Press any key to begin' function and start the game.
         if (Pong.running === false) {
@@ -102,18 +114,23 @@ function listen() {
         }
 
         // Handle up arrow and w key events
-        if (key.keyCode === 38 || key.keyCode === 87) Pong.player.move = DIRECTION.UP;
+        if (key.keyCode === 38 || key.keyCode === 87)
+            Pong.player.move = DIRECTION.UP;
 
         // Handle down arrow and s key events
-        if (key.keyCode === 40 || key.keyCode === 83) Pong.player.move = DIRECTION.DOWN;
+        if (key.keyCode === 40 || key.keyCode === 83)
+            Pong.player.move = DIRECTION.DOWN;
     });
 
     // Stop the player from moving when there are no keys being pressed.
-    document.addEventListener('keyup', function (key) { Pong.player.move = DIRECTION.IDLE; });
+    document.addEventListener('keyup', function (key) {
+        Pong.player.move = DIRECTION.IDLE; });
 }
 
 function resetTurn(victor, loser) {
-    this.ball = Ball.new.call(this, this.ball.speed);
+    // this.ball = Ball.new.call(this, this.ball.speed);
+    this.ball = ball.call(this, this.ball.speed);
+
     this.turn = loser;
     this.timer = (new Date()).getTime();
 
@@ -126,7 +143,8 @@ function turnDelayIsOver() {
 
 function generateRoundColor() {
     let newColor = colors[Math.floor(Math.random() * colors.length)];
-    if (newColor === this.color) return Pong._generateRoundColor();
+    if (newColor === this.color)
+        return Pong._generateRoundColor();
     return newColor;
 }
 
@@ -145,7 +163,7 @@ export let Game = {
  
     loop: loop,
  
-    listen: listen,
+    keyEvents: keyEvents,
  
     // Reset the ball location, the player turns and set a delay before the next round begins.
     _resetTurn: resetTurn,
