@@ -13,7 +13,7 @@ export let DIRECTION = {
     RIGHT: 4
 };
  
-export let rounds = [5, 5, 3, 3, 2];
+export let rounds = [3, 2, 2, 2, 1];
 let colors = ['#1abc9c', '#2ecc71', '#3498db', '#8c52ff', '#9b59b6'];
  
 // The ball object (The cube that bounces back and forth)
@@ -28,24 +28,11 @@ function ball(incrementedSpeed) {
             speed: incrementedSpeed || 7 
         };
 }
-// let Ball = {
-//     new: function (incrementedSpeed) {
-//         return {
-//             width: 18,
-//             height: 18,
-//             x: (this.canvas.width / 2) - 9,
-//             y: (this.canvas.height / 2) - 9,
-//             moveX: DIRECTION.IDLE,
-//             moveY: DIRECTION.IDLE,
-//             speed: incrementedSpeed || 7 
-//         };
-//     }
-// };
+
  
 // The ai object (The two lines that move up and down)
-let Ai = {
-    new: function (side) {
-        return {
+function player(side) {
+    return {
             width: 18,
             height: 180,
             x: side === 'left' ? 150 : this.canvas.width - 150,
@@ -54,8 +41,7 @@ let Ai = {
             move: DIRECTION.IDLE,
             speed: 8
         };
-    }
-};
+}
 
 function initializeGame() {
     this.canvas = document.querySelector('canvas');
@@ -67,9 +53,8 @@ function initializeGame() {
     this.canvas.style.width = (this.canvas.width / 2) + 'px';
     this.canvas.style.height = (this.canvas.height / 2) + 'px';
 
-    this.player = Ai.new.call(this, 'left');
-    this.ai = Ai.new.call(this, 'right');
-    // this.ball = Ball.new.call(this);
+    this.player = player.call(this, 'left');
+    this.ai = player.call(this, 'right');
     this.ball = ball.call(this);
 
     this.ai.speed = 5;
@@ -143,6 +128,7 @@ function turnDelayIsOver() {
 
 function generateRoundColor() {
     let newColor = colors[Math.floor(Math.random() * colors.length)];
+
     if (newColor === this.color)
         return Pong._generateRoundColor();
     return newColor;
@@ -175,5 +161,12 @@ export let Game = {
     _generateRoundColor: generateRoundColor
 };
  
-export let Pong = Object.assign({}, Game);
+export let Pong;// = Object.assign({}, Game);
+
+export function assignToPong() {
+    Pong = Object.assign({}, Game);
+}
+
+assignToPong();
+
 Pong.initialize();

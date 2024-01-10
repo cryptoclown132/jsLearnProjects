@@ -1,7 +1,8 @@
 
 import {
 	Pong,
-	Game
+	Game,
+    assignToPong
 } from './app.js';
 
 export * from './menu.js';
@@ -29,6 +30,7 @@ export function endGameMenu(text) {
     );
 
     setTimeout(function () {     
+        assignToPong();
         // Pong = Object.assign({}, Game);
         Pong.initialize();
     }, 3000);

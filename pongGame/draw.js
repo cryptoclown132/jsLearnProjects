@@ -90,14 +90,23 @@ function drawAi() {
 	);
 }
 
+export function drawArc(x, y, r, color){
+    this.context.fillStyle = color;
+    this.context.beginPath();
+    this.context.arc(x, y ,r ,0 , Math.PI*2, true);
+    this.context.closePath();
+    this.context.fill();
+}
+
 function drawBall() {
 	if (Pong._turnDelayIsOver.call(this)) {
-		this.context.fillRect(
-			this.ball.x,
-			this.ball.y,
-			this.ball.width,
-			this.ball.height
-		);
+		// this.context.fillRect(
+		// 	this.ball.x,
+		// 	this.ball.y,
+		// 	this.ball.width,
+		// 	this.ball.height
+		// );
+		drawArc.call(this, this.ball.x + 7, this.ball.y + 7, 7, '#ffffff');
 	}
 }
 

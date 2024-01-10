@@ -4,6 +4,8 @@ import {
 	DIRECTION
 } from './app.js';
 
+import { drawArc } from './draw.js';
+
 export * from './update.js';
 
 export function update() {
@@ -118,9 +120,36 @@ function checkPlayerMovement() {
 		this.player.y += this.player.speed;
 }
 
+function runLoop(runTime) {
+    const startTime = new Date().getTime(); // Get the start time in milliseconds
+
+    while (true) {
+        const currentTime = new Date().getTime(); // Get the current time in milliseconds
+        const elapsedTime = (currentTime - startTime) / 1000; // Calculate elapsed time in seconds
+		
+        if (elapsedTime >= runTime)
+		{
+			
+            return true; // Exit the loop when one second has passed
+		}
+    }
+}
+
 function checkBallCollision() {
 	if (this.ball.x <= 0)
-		Pong._resetTurn.call(this, this.ai, this.player);
+	{
+		const startTime = new Date().getTime();
+		//drawArc.call(this, 7, this.ball.y + 7, 7, 'Red');
+	
+		while (startTime + 1000 > new Date().getTime()) {
+			drawArc.call(this, 7, this.ball.y + 7, 7, 'Red');
+			drawArc.call(this, 7 * 2, this.ball.y + 7, 7 * 2, 'Red');
+		}
+		
+		// runLoop(1);
+		setTimeout(Pong._resetTurn.call(this, this.ai, this.player), 2000);
+		// Pong._resetTurn.call(this, this.ai, this.player);
+	}
     if (this.ball.x >= this.canvas.width - this.ball.width)
 		Pong._resetTurn.call(this, this.player, this.ai);
     if (this.ball.y <= 0)
