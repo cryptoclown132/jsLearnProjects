@@ -138,17 +138,17 @@ function runLoop(runTime) {
 function checkBallCollision() {
 	if (this.ball.x <= 0)
 	{
-		const startTime = new Date().getTime();
-		//drawArc.call(this, 7, this.ball.y + 7, 7, 'Red');
+		// const startTime = new Date().getTime();
+		// //drawArc.call(this, 7, this.ball.y + 7, 7, 'Red');
 	
-		while (startTime + 1000 > new Date().getTime()) {
-			drawArc.call(this, 7, this.ball.y + 7, 7, 'Red');
-			drawArc.call(this, 7 * 2, this.ball.y + 7, 7 * 2, 'Red');
-		}
+		// while (startTime + 1000 > new Date().getTime()) {
+		// 	drawArc.call(this, 7, this.ball.y + 7, 7, 'Red');
+		// 	requestAnimationFrame(Pong.loop);
+		// 	drawArc.call(this, 7 * 2, this.ball.y + 7, 7 * 2, 'Red');
+		// }
 		
 		// runLoop(1);
-		setTimeout(Pong._resetTurn.call(this, this.ai, this.player), 2000);
-		// Pong._resetTurn.call(this, this.ai, this.player);
+		Pong._resetTurn.call(this, this.ai, this.player);
 	}
     if (this.ball.x >= this.canvas.width - this.ball.width)
 		Pong._resetTurn.call(this, this.player, this.ai);
