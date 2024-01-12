@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <title>Signin and Signup</title>
+</head>
+<body>
+    <div class="container">
+        <div class="signin-signup">
+            <!-- Sign-in Form -->
+            <form action="" class="sign-in-form">
+                <h2 class="title">Sign in</h2>
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Username" autocomplete="new-password">
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Password" autocomplete="new-password">
+                </div>
+                <!-- <a href="#" class="forgot-password">Forgot password?</a> -->
+                <p><a href="#" class="account-text" id="forgot-password-link">Forgot password?</a></p>
+                <button type="submit" class="btn" >Login</button>
+                <p>Don't have an account? <a href="#" class="account-text" id="sign-up-link">Sign up</a></p>
+            </form>
+            <!-- Sign-up Form -->
+            <form action="" class="sign-up-form">
+                <h2 class="title">Sign up</h2>
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Username" autocomplete="new-password" required>
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" placeholder="Email" autocomplete="new-password" required>
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Password" autocomplete="new-password" required>
+                </div>
+                <button type="submit" class="btn-signup" >Sign Up</button>
+                <p>Already have an account? <a href="#" class="account-text" id="sign-in-link">Sign in</a></p>
+            </form>
+             <!-- Forgot-password Form -->
+            <form action="" class="forgot-password-form">
+                <h2 class="title">Forgot Password</h2>
+                <div class="input-field">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" placeholder="Email" id="email" name="email" required>
+                </div>    
+                <button type="submit" class="btn-signup">Reset Password</button>                
+                <p>Remember your password? <a href="#" class="account-text" id="sign-forgot-password-link">Sign in</a></p>
+            </form>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
