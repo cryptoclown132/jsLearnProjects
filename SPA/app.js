@@ -33,12 +33,31 @@ function handleButtonClick(url) {
 
 // Tell your browser to give you old state and re-render on back
 window.onpopstate = function (event) {
-  if (event.state)
-  	state = event.state;
-	  var stateJson = JSON.stringify(event.state);
+	if (event.state)
+		state = event.state;
+	let stateJson = JSON.stringify(event.state);
 
+	if (event.state.currPage == "task")
+	{
+		state.bodyText = `<H1>Task</H1>
+				<button id="home-button">Home</button>
+				<button id="game-button">Game</button>
+				<button id="chat-button">Chat</button>
+				<button id="tournament-button">Tournament</button>
+				<label for="taskInput">New Task:</label>
+				<input type="text" id="taskInput" placeholder="Enter task name">
+				<button id="addtask-button">Add Task</button>
+				<ul id="taskList">`
+				+ taskList +					
+				`</ul>
+				<script src="app.js"></script>`;
+		window.history.replaceState(state, null, "");
+		console.log("inside if");
+	}
+	console.log(taskList);
+	console.log(event.state.currPage);
 	  // Log the JSON string
-	  console.log('Navigated to state:', stateJson);
+	//   console.log('Navigated to state:', stateJson);
   render(state);
 };
 
@@ -50,7 +69,7 @@ function homePage() {
 				<button id="task-button">Task</button>
 				<script src="app.js"></script>`;
 	currentStateIndex++;
-	currPage = "home";
+	state.currPage = "home";
 	handleButtonClick("")
 }
 
@@ -62,8 +81,8 @@ function gamePage() {
 				<button id="task-button">Task</button>
 				<script src="app.js"></script>`;
 	currentStateIndex++;
-	currPage = "game";
-	handleButtonClick("")
+	state.currPage = "game";
+	handleButtonClick("game")
 }
 
 function chatPage() {
@@ -74,7 +93,7 @@ function chatPage() {
 				<button id="task-button">Task</button>
 				<script src="app.js"></script>`;
 	currentStateIndex++;
-	currPage = "chat";
+	state.currPage = "chat";
 	handleButtonClick("")
 }
 
@@ -86,8 +105,8 @@ function tournamentPage() {
 				<button id="task-button">Task</button>
 				<script src="app.js"></script>`;
 	currentStateIndex++;
-	currPage = "tournament";
-	handleButtonClick("")///tournament
+	state.currPage = "tournament";
+	handleButtonClick("tournament")///tournament
 }
 
 function taskPage(buttonId) {
@@ -111,14 +130,14 @@ function taskPage(buttonId) {
 				`</ul>
 				<script src="app.js"></script>`;
 	if (buttonId == "addtask-button") {
-		replaceAllHistory(state);
-		// window.history.replaceState(state, null, "");
+		// replaceAllHistory(state);
+		window.history.replaceState(state, null, "");
+		state.currPage = "task";
 		render(state);
 	}
 	else {
 		handleButtonClick("")///task
-		currentStateIndex++;
-		currPage = "task";
+		state.currPage = "task";
 	}
 }
 
@@ -154,11 +173,13 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 });
 
-let taskList = "";
+let taskList = localStorage.getItem('taskList') || "";
 
 function addTask() {
-	var taskName = document.getElementById('taskInput').value;
+	let taskName = document.getElementById('taskInput').value;
 
-	if (taskName.trim() !== '')
+	if (taskName.trim() !== '') {
 		taskList += "<li>" + taskName + "</li>";
+		localStorage.setItem('taskList', taskList);
+	}
 }
